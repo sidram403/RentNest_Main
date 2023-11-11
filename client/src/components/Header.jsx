@@ -8,7 +8,7 @@ const Header = () => {
       <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
         <Link to="/">
           <div className="logo__section w-28 sm:w-48">
-            <img src="../../public/logo.png" alt="img" />
+            <img src="./logo.png" alt="img" />
           </div>
         </Link>
         <form className="bg-slate-100 p-3 rounded-lg flex items-center">
