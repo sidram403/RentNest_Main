@@ -178,7 +178,7 @@ const Profile = () => {
           {loading ? 'Loading...' : "Update"}
         </button>
         <Link className='bg-green-700 text-white rounded-lg p-3 uppercase text-center hover:opacity-95' to='/create-listing'>
-            Create Lisiting
+            Update Lisiting
         </Link>
       </form>
       <div className='flex justify-between mt-5'>
@@ -203,7 +203,10 @@ const Profile = () => {
           </Link>
           <div className='flex flex-col'>
           <button onClick={()=>handleListingDelete(listing._id)} className='text-red-700 uppercase'>Delete</button>
-          <button className='text-green-700 uppercase'>Edit</button>
+          <Link to={`/update-listing/${listing._id}`}>
+            <button className='text-green-700 uppercase'>Edit</button>
+          
+          </Link>
           </div>
 
         </div>
