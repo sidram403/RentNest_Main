@@ -32,6 +32,22 @@ import {
     const [uploading, setUploading] = useState(false);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
+    
+    useEffect(() => {
+        const fetchListing = async () => {
+          const listingId = params.listingId;
+          const res = await fetch(`/api/listing/list/${listingId}`);
+          const data = await res.json();
+          if (data.success === false) {
+            console.log(data.message);
+            return;
+          }
+          setFormData(data);
+        };
+    
+        fetchListing();
+      }, []);
+    
     const handleImageSubmit = (e) => {
       if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
         setUploading(true);
@@ -153,18 +169,7 @@ import {
         setLoading(false);
       }
     };
-    useEffect(async() =>{
-        const fetchListing = async ()=>{
-            const listingId = params.listingId;
-            const res = await fetch(`/api/listing/get/${listingId}`);
-            const data = await res.json();
-            if(data.success === false) {
-                console.log(data.message);
-            }
-            setFormData(data)
-        }
-        fetchListing();
-    },[])
+    
     return (
       <main className="p-3 max-w-4xl mx-auto">
         <h1 className="text-3xl font-semibold text-center my-7">
