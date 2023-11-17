@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore from "swiper";
 import { Navigation } from "swiper/modules";
 import "swiper/css/bundle";
 import { FaShare, FaMapMarkerAlt, FaBed, FaBath, FaParking, FaChair } from "react-icons/fa";
 import Conatct from "../components/Conatct";
+import Alert from '@mui/material/Alert';
 
 const Listing = () => {
   SwiperCore.use([Navigation]);
@@ -17,6 +18,7 @@ const Listing = () => {
   const [error, setError] = useState(false);
   const [copied, setCopied] = useState(false);
   const params = useParams();
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -40,9 +42,19 @@ const Listing = () => {
     };
     fetchListing();
   }, [params.id]);
+
+  const handleGetOwnerDetails =() =>{
+    if(currentUser && listing.userRef !== currentUser._id){
+      setContact(true);
+    }else{
+      navigate('/sign-in')
+    }
+  }
   return (
     <main>
-      {loading && <p className="text-center my-7 text-2xl">Loading...</p>}
+      {loading && <p className="text-center my-7 text-2xl">
+      <span className="loading loading-dots loading-lg"></span>
+        </p>}
       {error && (
         <p className="text-center my-7 text-2xl">Something went wrong!</p>
       )}
@@ -74,9 +86,10 @@ const Listing = () => {
             />
           </div>
           {copied && (
-            <p className="fixed top-[23%] right-[5%] z-10 rounded-md bg-slate-100 p-2">
-              Link copied!
-            </p>
+            <Alert severity="success" variant="filled" className="fixed bottom-[10%] right-[5%] z-10 rounded-md bg-slate-100 p-2 ">
+            Link copied!
+            </Alert>
+            
           )}
           <div className="flex flex-col max-w-4xl mx-auto p-3 my-7 gap-4">
             <p className="text-2xl font-semibold">
@@ -126,10 +139,12 @@ const Listing = () => {
 
                 </li>
             </ul>
-            {currentUser && listing.userRef !== currentUser._id && !contact &&(
-            <button onClick={()=> setContact(true)} className="bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3">Contact Landlord</button>
+            {!contact && (
+            <button onClick={handleGetOwnerDetails} className="bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3">Get owner Deatails</button>
 
             )}
+
+            
             {contact && <Conatct listing={listing} />}
           </div>
           

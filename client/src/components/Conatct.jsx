@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Alert from '@mui/material/Alert';
 
 const Conatct = ({ listing }) => {
   const [landlord, setLandlord] = useState(null);
   const [message, setMessage] = useState("");
- 
+  const [copied, setCopied] = useState(false);
   const onChange = (e) => {
     setMessage(e.target.value);
   };
@@ -27,27 +28,28 @@ const Conatct = ({ listing }) => {
     <div>
       {landlord && (
         <div className='flex flex-col gap-2'>
-          <p>
-            Contact <span className='font-semibold'>{landlord.username}</span>{' '}
-            for{' '}
-            <span className='font-semibold'>{listing.name.toLowerCase()}</span>
-          </p>
-          <textarea
-            name='message'
-            id='message'
-            rows='2'
-            value={message}
-            onChange={onChange}
-            placeholder='Enter your message here...'
-            className='w-full border p-3 rounded-lg'
-          ></textarea>
+          
+          <p>Conatct Number : <span>{landlord.phone}</span></p>
+          
 
           <Link
-          to={`mailto:${landlord.email}?subject=Regarding ${listing.name}&body=${message}`}
-          className='bg-slate-700 text-white text-center p-3 uppercase rounded-lg hover:opacity-95'
+          onClick={() => {
+            navigator.clipboard.writeText(landlord.phone);
+            setCopied(true);
+            setTimeout(() => {
+              setCopied(false);
+            }, 2000);
+          }}
+          className='bg-green-700 text-white text-center p-3 uppercase rounded-lg hover:opacity-95'
           >
-            Send Message          
+            Call owner          
           </Link>
+          {copied && (
+            <Alert variant="filled" severity="success" className="fixed bottom-[10%] right-[5%] z-10 rounded-md bg-slate-100 p-2 ">
+            Owner Number Copied!
+            </Alert>
+            
+          )}
         </div>
       )}
     </div>

@@ -237,7 +237,7 @@ const Search = () => {
           )}
           {loading && (
             <p className="text-xl text-slate-700 text-center w-full">
-              Loading...
+              <span className="loading loading-dots loading-lg"></span>
             </p>
           )}
           {!loading &&
