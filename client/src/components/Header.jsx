@@ -24,7 +24,7 @@ const Header = () => {
     }
   }, [location.search]);
   return (
-    <header className=" shadow-md">
+    <header className=" ">
       <div className="flex justify-between items-center max-w-6xl mx-auto p-3">
         <Link to="/">
           <div className="logo__section w-28 sm:w-48">
@@ -47,7 +47,7 @@ const Header = () => {
           </button>
         </form>
         <div className="flex gap-4">
-          <Link to="/">
+          <Link to="/" className="hidden md:inline">
             <button
               type="button"
               className="p-2 px-5 border rounded-lg uppercase hover:bg-white hover:text-black transition ease-in-out delay-150"
@@ -56,7 +56,7 @@ const Header = () => {
             </button>
           </Link>
           {currentUser && (
-            <Link to="/create-listing">
+            <Link to="/create-listing" className="none md:inline">
               <button
                 type="button"
                 className="uppercase p-2 px-5 border rounded-lg hover:bg-white hover:text-black transition ease-in-out delay-150"
