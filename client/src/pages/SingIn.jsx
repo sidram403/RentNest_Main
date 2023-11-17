@@ -44,41 +44,42 @@ const SignIn = () => {
     }
   };
   return (
-    <div className="p-3 max-w-lg mx-auto">
-      <h1 className="text-3xl text-center font-semibold my-7"> Sign In</h1>
-
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <input
-          type="email"
-          placeholder="Email"
-          className="border p-3 rounded-lg"
-          id="email"
-          onChange={handleChange}
-        />
-
-        <input
-          type="password"
-          placeholder="Password"
-          className="border p-3 rounded-lg"
-          id="password"
-          onChange={handleChange}
-        />
-        <button
-          disabled={loading}
-          className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
-        >
-          {loading ? "Loading..." : "Sign In"}
-        </button>
-        <OAuth/>
-      </form>
-      <div className="flex gap-2 mt-5">
-        <p>Dont have an account?</p>
-        <Link to="/sign-up">
-          <span className="text-blue-700">Sign Up</span>
-        </Link>
-      </div>
-      {error && <p className="text-red-500 mt-5">{error}</p>}
+    <div className="hero  min-h-screen bg-slate-200">
+  <div className="hero-content flex-col lg:flex-row-reverse">
+    <div className="text-center items-center flex flex-col lg:text-left">
+      <h1 className="text-5xl font-bold text-black">Login now!</h1>
+      <p className="py-6 text-slate-700 text-center">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
     </div>
+    <div className="card shrink-0 w-full max-w-md shadow-2xl bg-white">
+      <form onSubmit={handleSubmit} className="card-body">
+        <h1 className="text-4xl mb-5 font-bold text-black mx-auto">Login</h1>
+        <div className="form-control p-3">
+          
+          <input type="email" placeholder="Email" className="input input-bordered bg-transparent text-black" required id="email" onChange={handleChange} />
+        </div>
+        <div className="form-control p-3">
+          <input type="password" placeholder="Password" className="input input-bordered bg-transparent text-black" required id="password" onChange={handleChange} />
+         
+        </div>
+        <div className="form-control my-6">
+          <button  disabled={loading} className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
+          {loading ? "Loading..." : "Sign In"}
+          </button>
+        </div>
+        <OAuth/>
+        <div className="flex gap-2 mx-auto my-5 text-black">
+         <span>Dont have an account?</span>
+         <Link to="/sign-up">
+           <span className="text-blue-700">Sign Up</span>
+         </Link>
+       </div>
+       {error && <p className="text-red-500 mt-1 mx-auto">{error}</p>}
+      </form>
+     
+    </div>
+  </div>
+</div>
+    
   );
 };
 
