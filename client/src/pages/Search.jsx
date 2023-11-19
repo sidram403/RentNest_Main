@@ -1,57 +1,38 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import ListingItem from "../components/ListingItem";
 
 const Search = () => {
   const [sidebarData, setSidebarData] = useState({
     searchTerm: "",
-    type: "all",
-    parking: false,
-    furnished: false,
-    offer: false,
-    sort: "created_at",
-    order: "desc",
+    filterTerm: "",
+
+    
   });
   const [loading, setLoading] = useState(false);
   const [showMore, setShowMore] = useState(false);
   const [listings, setListings] = useState([]);
-  const navigate = useNavigate();
+  console.log(listings)
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const searchTermFromUrl = urlParams.get("searchTerm");
-    const typeFromUrl = urlParams.get("type");
-    const parkingFromUrl = urlParams.get("parking");
-    const furnishedFromUrl = urlParams.get("furnished");
-    const offerFromUrl = urlParams.get("offer");
-    const sortFromUrl = urlParams.get("sort");
-    const orderFromUrl = urlParams.get("order");
+    const filterTermFromUrl = urlParams.get("filterTerm");
 
     if (
-      searchTermFromUrl ||
-      typeFromUrl ||
-      parkingFromUrl ||
-      furnishedFromUrl ||
-      offerFromUrl ||
-      sortFromUrl ||
-      orderFromUrl
+      searchTermFromUrl || filterTermFromUrl
     ) {
       setSidebarData({
         searchTerm: searchTermFromUrl || "",
-        type: typeFromUrl || "all",
-        parking: parkingFromUrl === "true" ? true : false,
-        furnished: furnishedFromUrl === "true" ? true : false,
-        offer: offerFromUrl === "true" ? true : false,
-        sort: sortFromUrl || "created_at",
-        order: orderFromUrl || "desc",
+        filterTerm: filterTermFromUrl || "",
       });
     }
     const fetchListings = async () => {
       setLoading(true);
       setShowMore(false)
       const searchQuery = urlParams.toString();
-      const res = await fetch(`/api/listing/get?${searchQuery}`);
+      const res = await fetch(`api/listing/get?${searchQuery}`);
       const data = await res.json();
+      console.log(data);
       if(data.length > 8) {
         setShowMore(true);
       }else{
@@ -74,6 +55,10 @@ const Search = () => {
 
     if (e.target.id === "searchTerm") {
       setSidebarData({ ...sidebarData, searchTerm: e.target.value });
+    }
+
+    if (e.target.id === "filterTerm") {
+      setSidebarData({ ...sidebarData, filterTerm: e.target.value });
     }
 
     if (
@@ -101,14 +86,13 @@ const Search = () => {
     e.preventDefault();
     const urlParams = new URLSearchParams();
     urlParams.set("searchTerm", sidebarData.searchTerm);
-    urlParams.set("type", sidebarData.type);
-    urlParams.set("parking", sidebarData.parking);
-    urlParams.set("furnished", sidebarData.furnished);
-    urlParams.set("offer", sidebarData.offer);
-    urlParams.set("sort", sidebarData.sort);
-    urlParams.set("order", sidebarData.order);
+    urlParams.set("filterTerm", sidebarData.filterTerm);
     const searchQuery = urlParams.toString();
-    navigate(`/search?${searchQuery}`);
+    // navigate(`/search?${searchQuery}`);
+    const url = `http://localhost:3000/api/listing/get?${searchQuery}`
+
+    window.open(url, '_blank');
+    
   };
 
   const onShowMoreClick = async () =>{
@@ -142,86 +126,21 @@ const Search = () => {
               onChange={handleChange}
             />
           </div>
-          <div className="flex gap-2 flex-wrap items-center">
-            <label className="font-semibold">Type:</label>
-            <div className="flex gap-2">
-              <input
-                type="checkbox"
-                id="all"
-                className="w-5"
-                onChange={handleChange}
-                checked={sidebarData.type === "all"}
-              />
-              <span>Rent & Sale</span>
-            </div>
-            <div className="flex gap-2">
-              <input
-                type="checkbox"
-                id="rent"
-                className="w-5"
-                onChange={handleChange}
-                checked={sidebarData.type === "rent"}
-              />
-              <span>Rent</span>
-            </div>
-            <div className="flex gap-2">
-              <input
-                type="checkbox"
-                id="sale"
-                className="w-5"
-                onChange={handleChange}
-                checked={sidebarData.type === "sale"}
-              />
-              <span>Sale</span>
-            </div>
-            <div className="flex gap-2">
-              <input
-                type="checkbox"
-                id="offer"
-                className="w-5"
-                onChange={handleChange}
-                checked={sidebarData.offer}
-              />
-              <span>Offer</span>
-            </div>
-          </div>
-          <div className="flex gap-2 flex-wrap items-center">
-            <label className="font-semibold">Amenities:</label>
-            <div className="flex gap-2">
-              <input
-                type="checkbox"
-                id="parking"
-                className="w-5"
-                onChange={handleChange}
-                checked={sidebarData.parking}
-              />
-              <span>Parking</span>
-            </div>
-            <div className="flex gap-2">
-              <input
-                type="checkbox"
-                id="furnished"
-                className="w-5"
-                onChange={handleChange}
-                checked={sidebarData.furnished}
-              />
-              <span>Furnished</span>
-            </div>
-          </div>
           <div className="flex items-center gap-2">
-            <label className="font-semibold">Sort:</label>
-            <select
+            <label className="whitespace-nowrap font-semibold">
+              Filter Term:
+            </label>
+            <input
+              type="text"
+              id="filterTerm"
+              placeholder="Search..."
+              className="rounded-lg border p-3 w-full"
+              value={sidebarData.filterTerm}
               onChange={handleChange}
-              defaultValue={"created_at_desc"}
-              id="sort_order"
-              className="border rounded-lg p-3"
-            >
-              <option value="regularPrice_desc">Price high to low</option>
-              <option value="regularPrice_asc">Price low to high</option>
-              <option value="createdAt_desc">Latest</option>
-              <option value="createdAt_asc">Oldest</option>
-            </select>
+            />
           </div>
+         
+         
           <button className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95">
             Search
           </button>
@@ -229,7 +148,7 @@ const Search = () => {
       </div>
       <div className="flex-1">
         <h1 className="text-3xl font-semibold border-b p-3 text-slate-700 mt-5">
-          Listing Results:
+          Log Results: {listings.length}
         </h1>
         <div className="p-7 flex flex-wrap gap-4">
           {!loading && listings.length === 0 && (

@@ -2,58 +2,43 @@ import mongoose from 'mongoose';
 
 const listingSchema = new mongoose.Schema(
   {
-    name: {
+    message: {
       type: String,
       required: true,
     },
-    description: {
+    level: {
       type: String,
       required: true,
     },
-    address: {
+    resourceId: {
       type: String,
       required: true,
     },
-    regularPrice: {
-      type: Number,
-      required: true,
-    },
-    discountPrice: {
-      type: Number,
-      required: true,
-    },
-    bathrooms: {
-      type: Number,
-      required: true,
-    },
-    bedrooms: {
-      type: Number,
-      required: true,
-    },
-    furnished: {
-      type: Boolean,
-      required: true,
-    },
-    parking: {
-      type: Boolean,
-      required: true,
-    },
-    type: {
+    timestamps:{
       type: String,
       required: true,
     },
-    offer: {
-      type: Boolean,
-      required: true,
+    tracedId : {
+      type: String,
+      required:true,
     },
-    imageUrls: {
-      type: Array,
-      required: true,
+    spanId:{
+      type:String,
+      required:true,
     },
-    userRef: {
+    commit : {
       type: String,
       required: true,
     },
+    metadata: {
+      type: Object,
+    },
+    parentId:{
+      type: String,
+    }
+
+    
+    
   },
   { timestamps: true }
 );
