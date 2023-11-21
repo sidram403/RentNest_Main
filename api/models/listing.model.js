@@ -30,8 +30,17 @@ const listingSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    metadata: {
-      type: Object,
+    depositPrice:{
+      type: String,
+      required: true,
+    },
+    offer: {
+      type: Boolean,
+      required: true,
+    },
+    imageUrls: {
+      type: Array,
+      required: true,
     },
     parentId:{
       type: String,

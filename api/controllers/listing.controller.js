@@ -34,18 +34,19 @@ export const getListings = async (req,res,next) =>{
   
 
       const searchTerm = req.query.searchTerm || '';
-      const filterTerm = req.query.filterTerm || '';
-      const levelTerm = req.query.levelTerm || '';
+      const loacationTerm = req.query.loacationTerm || '';
 
       const sort = req.query.sort || 'createdAt';
       
       const order = req.query.order || 'desc';
 
       const listings = await Listing.find({
-        message:{$regex: searchTerm, $options: 'i'},
-        resourceId:{$regex: filterTerm, $options: 'i'},
-        level:{$regex: levelTerm, $options: 'i'},
-        
+        name:{$regex: loacationTerm, $options: 'i'},
+        address: {$regex: searchTerm, $options:'i'},
+        offer,
+        furnished,
+        parking,
+        type,
       }).sort(
         {[sort]:order}
       ).limit(limit).skip(startIndex)

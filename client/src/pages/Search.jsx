@@ -110,8 +110,9 @@ const Search = () => {
   }
 
   return (
-    <div className="flex flex-col md:flex-row md:min-h-screen">
+    <div className="flex flex-col md:flex-row md:min-h-screen bg-white text-black">
       <div className="p-7 border-b-2 md:border-r-2 ">
+        
         <form onSubmit={handleSubmit} className="flex flex-col gap-8">
           <div className="flex items-center gap-2">
             <label className="whitespace-nowrap font-semibold">
@@ -120,12 +121,79 @@ const Search = () => {
             <input
               type="text"
               id="searchTerm"
-              placeholder="Search..."
-              className="rounded-lg border p-3 w-full"
+              placeholder="Search your location..."
+              className="rounded-lg border p-3 w-full bg-white"
               value={sidebarData.searchTerm}
               onChange={handleChange}
             />
           </div>
+          <div className="flex flex-row md:flex-col gap-2 flex-wrap ">
+            <label className="font-semibold">Type:</label>
+            <div className="flex gap-2">
+              <input
+                type="checkbox"
+                id="all"
+                className="w-5"
+                onChange={handleChange}
+                checked={sidebarData.type === "all"}
+              />
+              <span>Rent & Sale</span>
+            </div>
+            <div className="flex gap-2">
+              <input
+                type="checkbox"
+                id="rent"
+                className="w-5"
+                onChange={handleChange}
+                checked={sidebarData.type === "rent"}
+              />
+              <span>Rent</span>
+            </div>
+            <div className="flex gap-2">
+              <input
+                type="checkbox"
+                id="sale"
+                className="w-5"
+                onChange={handleChange}
+                checked={sidebarData.type === "sale"}
+              />
+              <span>Sale</span>
+            </div>
+            <div className="flex gap-2">
+              <input
+                type="checkbox"
+                id="offer"
+                className="w-5"
+                onChange={handleChange}
+                checked={sidebarData.offer}
+              />
+              <span>Offer</span>
+            </div>
+          </div>
+          <div className="flex flex-row md:flex-col gap-2 flex-wrap ">
+            <label className="font-semibold">Amenities:</label>
+            <div className="flex gap-2">
+              <input
+                type="checkbox"
+                id="parking"
+                className="w-5"
+                onChange={handleChange}
+                checked={sidebarData.parking}
+              />
+              <span>Parking</span>
+            </div>
+            <div className="flex gap-2">
+              <input
+                type="checkbox"
+                id="furnished"
+                className="w-5"
+                onChange={handleChange}
+                checked={sidebarData.furnished}
+              />
+              <span>Furnished</span>
+            </div>
+          </div>
+          
           <div className="flex items-center gap-2">
             <label className="whitespace-nowrap font-semibold">
               Filter Term:
@@ -137,7 +205,15 @@ const Search = () => {
               className="rounded-lg border p-3 w-full"
               value={sidebarData.filterTerm}
               onChange={handleChange}
-            />
+              defaultValue={"created_at_desc"}
+              id="sort_order"
+              className="border rounded-lg p-3 bg-white"
+            >
+              <option value="regularPrice_desc">Price high to low</option>
+              <option value="regularPrice_asc">Price low to high</option>
+              <option value="createdAt_desc">Latest</option>
+              <option value="createdAt_asc">Oldest</option>
+            </select>
           </div>
          
          
@@ -150,7 +226,7 @@ const Search = () => {
         <h1 className="text-3xl font-semibold border-b p-3 text-slate-700 mt-5">
           Log Results: {listings.length}
         </h1>
-        <div className="p-7 flex flex-wrap gap-4">
+        <div className="p-7 px-3 md:px-7 flex flex-wrap gap-4">
           {!loading && listings.length === 0 && (
             <p className="text-xl text-slate-700 ">No listing found</p>
           )}
