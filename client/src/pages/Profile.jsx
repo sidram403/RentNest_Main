@@ -235,7 +235,7 @@ const Profile = () => {
               className="bg-green-700 text-white rounded-lg p-3 uppercase text-center hover:opacity-95"
               to="/create-listing"
             >
-              Create Lisiting
+              Create Lisitin
             </Link>
           </form>
           <div className="flex justify-between mt-5">
