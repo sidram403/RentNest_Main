@@ -209,6 +209,7 @@ const Search = () => {
               id="sort_order"
               className="border rounded-lg p-3 bg-white"
             >
+            <select>
               <option value="regularPrice_desc">Price high to low</option>
               <option value="regularPrice_asc">Price low to high</option>
               <option value="createdAt_desc">Latest</option>
